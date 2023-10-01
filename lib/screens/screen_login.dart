@@ -1,3 +1,4 @@
+import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -50,7 +51,7 @@ class LoginScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Globals.backgroundColor,
       body: Row(
         children: [
           Expanded(flex: 1, child: Container()),
@@ -64,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                   // make image only take 50% of the screen
 
                   child: Image(
-                    image: AssetImage('assets/logo.png'),
+                    image: AssetImage('assets/logo_text.png'),
                     height: 200,
                   ),
                 ),

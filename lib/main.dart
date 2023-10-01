@@ -1,4 +1,5 @@
 import 'package:crocosign/screens/screen_agreements.dart';
+import 'package:crocosign/screens/screen_create.dart';
 import 'package:crocosign/screens/screen_loading.dart';
 import 'package:crocosign/screens/screen_login.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MainRouter extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => LoginScreen(),
         '/agreements': (BuildContext context) => AgreementScreen(),
+        '/create': (BuildContext context) => CreateScreen(),
         '/loading': (BuildContext context) => const LoadingScreen(),
       },
       home: LoginScreen(),

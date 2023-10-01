@@ -1,3 +1,4 @@
+import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -9,7 +10,7 @@ class LoadingScreen extends StatelessWidget {
     // add a container in the center of the screen
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Globals.backgroundColor,
         body: Center(
           child: Lottie.asset('assets/lottie.json'),
         ));

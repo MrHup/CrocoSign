@@ -1,3 +1,6 @@
+import 'package:crocosign/static/globals.dart';
+import 'package:crocosign/widgets/card_agreement.dart';
+import 'package:crocosign/widgets/logo_banner.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:pdf/pdf.dart';
@@ -9,14 +12,32 @@ class AgreementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          child: const Text("My Agreements",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        ),
-      ]),
-    );
+        backgroundColor: Globals.backgroundColor,
+        body: Column(children: [
+          LogoBanner("My Agreements"),
+          Container(
+            child: Expanded(
+              child: ListView(
+                children: [
+                  CardAgreement(
+                      title: "THIS IS A TEST",
+                      status: "waiting",
+                      date: "22-03-2019"),
+                  CardAgreement(
+                      title: "THIS IS A TEST",
+                      status: "waiting",
+                      date: "22-03-2019")
+                ],
+              ),
+            ),
+          ),
+        ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/create');
+          },
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.add),
+        ));
   }
 }
