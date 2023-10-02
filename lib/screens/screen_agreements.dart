@@ -1,4 +1,3 @@
-import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/widgets/card_agreement.dart';
 import 'package:crocosign/widgets/logo_banner.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ class AgreementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Globals.backgroundColor,
+        backgroundColor: Colors.white,
         body: Column(children: [
           LogoBanner("My Agreements"),
           Container(
@@ -34,7 +33,7 @@ class AgreementScreen extends StatelessWidget {
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/create');
+            Navigator.pushNamed(context, '/preview'); // /create
           },
           backgroundColor: Colors.green,
           child: const Icon(Icons.add),

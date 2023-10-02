@@ -16,7 +16,7 @@ class LogoBanner extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
-            child: Text("My Agreements",
+            child: Text(title,
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
