@@ -4,11 +4,10 @@ import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_pdf/flutter_to_pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
-class PdfPreviewGenerate extends StatelessWidget {
-  PdfPreviewGenerate({super.key});
+class PdfPreviewScreen extends StatelessWidget {
+  PdfPreviewScreen({super.key});
 
   final doc = pw.Document();
 
@@ -29,33 +28,16 @@ class PdfPreviewGenerate extends StatelessWidget {
     return pdf.save();
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
-    final pdf = pw.Document();
-
-    pdf.addPage(
-      pw.Page(
-        pageFormat: format,
-        build: (context) => pw.Placeholder(),
-      ),
-    );
-
-    return pdf.save();
-  }
-
   @override
   Widget build(BuildContext context) {
-    doc.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Center(
-            child: pw.Text('Hello World'),
-          ); // Center
-        })); // Page
-
-    return PdfPreview(
-      maxPageWidth: 700,
-      // build: (format) => _generatePdf(format, "Test"),
-      build: (format) => _generateFancyPdf(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: PdfPreview(
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        maxPageWidth: 700,
+        build: (format) => _generateFancyPdf(),
+      ),
     );
   }
 }

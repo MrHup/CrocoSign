@@ -1,4 +1,5 @@
 import 'package:crocosign/static/globals.dart';
+import 'package:crocosign/widgets/bottom_nav_bar.dart';
 import 'package:crocosign/widgets/logo_banner.dart';
 import 'package:crocosign/widgets/long_input_field.dart';
 import 'package:crocosign/widgets/short_input_field.dart';
@@ -14,6 +15,7 @@ class CreateScreen extends StatelessWidget {
     TextEditingController signersController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomNavBar((index) => print("")),
       body: Column(
         children: [
           LogoBanner("Create Agreement"),
@@ -35,14 +37,14 @@ class CreateScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {},
-                        child: const Text("Generate"),
                         style: ElevatedButton.styleFrom(
-                          primary: Globals.primaryColor,
+                          backgroundColor: Globals.primaryColor,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 20),
                           textStyle: const TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
+                        child: const Text("Generate"),
                       ),
                     ],
                   ),

@@ -16,6 +16,7 @@ dependencies:
   flutter_to_pdf: ^0.1.1
   lottie: ^2.6.0
   im_stepper: ^1.0.1+1
+  flutter_snake_navigationbar: ^0.6.1
   
 
 dev_dependencies:
