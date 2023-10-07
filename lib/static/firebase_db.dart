@@ -52,13 +52,7 @@ String generateRandomString(int len) {
 }
 
 Future<void> createAgreement(Agreement agreement) async {
-  String randomId = generateRandomString(10);
-  await database
-      .ref("users")
-      .child(Globals.user!.uid)
-      .child(randomId)
-      .push()
-      .set({
+  await database.ref("users").child(Globals.user!.uid).push().set({
     "title": agreement.title,
     "topic": agreement.topic,
     "signers": agreement.signers,
