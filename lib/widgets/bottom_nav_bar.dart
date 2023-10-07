@@ -11,7 +11,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedItemPosition = 0;
+  int _selectedItemPosition = 1;
   @override
   Widget build(BuildContext context) {
     return SnakeNavigationBar.color(
@@ -38,22 +38,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
       },
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.edit_document), label: 'New Doc'),
-        BottomNavigationBarItem(icon: Icon(Icons.picture_as_pdf), label: 'PDF'),
+            icon: Icon(Icons.picture_as_pdf), label: 'New Doc'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'PDF'),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Profile'),
         // BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search')
       ],
     );
-  }
-}
-
-void goToScreen(BuildContext context, int index) {
-  print("Calling this function");
-  if (index == 0) {
-    Navigator.pushNamedAndRemoveUntil(context, '/create', (route) => false);
-  } else if (index == 1) {
-    Navigator.pushNamedAndRemoveUntil(context, '/agreements', (route) => false);
-  } else if (index == 2) {
-    Navigator.pushNamedAndRemoveUntil(context, '/profile', (route) => false);
   }
 }

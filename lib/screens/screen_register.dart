@@ -144,7 +144,7 @@ class RegisterScreen extends StatelessWidget {
                             if (success) {
                               // ignore: use_build_context_synchronously
                               Navigator.pushNamedAndRemoveUntil(
-                                  context, '/agreements', (route) => false);
+                                  context, '/home', (route) => false);
                             }
                           },
                           child: const Text("Create Account"),

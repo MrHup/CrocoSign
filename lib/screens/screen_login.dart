@@ -20,8 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print('User is currently signed out!');
       } else {
         Globals.user = FirebaseAuth.instance.currentUser;
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/agreements', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
     });
   }
