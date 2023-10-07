@@ -19,7 +19,7 @@ class CreateScreen extends StatelessWidget {
     TextEditingController countryController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavBar((index) => print("")),
+      bottomNavigationBar: BottomNavBar((index) => goToScreen(context, index)),
       body: Column(
         children: [
           LogoBanner("Create Agreement"),
@@ -60,11 +60,11 @@ class CreateScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Globals.primaryColor,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                              horizontal: 20, vertical: 14),
                           textStyle: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                         child: const Text("Generate"),

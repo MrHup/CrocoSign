@@ -13,7 +13,8 @@ class AgreementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: BottomNavBar((index) => print("")),
+        bottomNavigationBar:
+            BottomNavBar((index) => goToScreen(context, index)),
         body: Column(children: [
           LogoBanner("My Agreements"),
           Container(

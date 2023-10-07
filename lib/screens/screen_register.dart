@@ -1,49 +1,59 @@
 import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // ignore: must_be_immutable
-class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void checkUserLogin() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        Globals.user = FirebaseAuth.instance.currentUser;
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/agreements', (route) => false);
-      }
-    });
-  }
-
-  void attemptLogin(String emailAddress, String password) async {
+  Future<bool> attemptCreateAccount(
+      String emailAddress, String password) async {
     try {
-      final credentials = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailAddress, password: password);
-      Globals.user = credentials.user;
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+      Globals.user = credential.user;
+      Fluttertoast.showToast(
+          msg: "Account created successfully!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      if (e.code == 'weak-password') {
+        Fluttertoast.showToast(
+            msg: "The password provided is too weak.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        return false;
+      } else if (e.code == 'email-already-in-use') {
+        Fluttertoast.showToast(
+            msg: "The account already exists for that email.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        return false;
       }
+    } catch (e) {
+      print(e);
+      return false;
     }
-  }
 
-  @override
-  void initState() {
-    checkUserLogin();
-    super.initState();
+    return true;
   }
 
   @override
@@ -127,11 +137,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            attemptLogin(_emailController.text,
+                          onPressed: () async {
+                            final bool success = await attemptCreateAccount(
+                                _emailController.text,
                                 _passwordController.text);
+                            if (success) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/agreements', (route) => false);
+                            }
                           },
-                          child: const Text("Sign In"),
+                          child: const Text("Create Account"),
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -139,13 +155,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextButton(
                           onPressed: () {
                             Navigator.pushNamedAndRemoveUntil(
-                                context, '/register', (route) => false);
+                                context, '/login', (route) => false);
                           },
                           child: Row(
                             children: [
-                              const Text("New here?",
+                              const Text("Already have an account?",
                                   style: TextStyle(color: Colors.grey)),
-                              Text(" Sign Up now!",
+                              Text(" Sign In here!",
                                   style:
                                       TextStyle(color: Globals.primaryColor)),
                             ],
