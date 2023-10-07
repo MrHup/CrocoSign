@@ -35,7 +35,7 @@ class AgreementScreen extends StatelessWidget {
         ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/editable'); // /create
+            Navigator.pushNamed(context, '/create'); // /create
           },
           backgroundColor: Colors.green,
           child: const Icon(Icons.add),
