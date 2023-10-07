@@ -1,4 +1,3 @@
-import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -51,7 +50,7 @@ class LoginScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Globals.backgroundColor,
+      backgroundColor: Colors.white,
       body: Row(
         children: [
           Expanded(flex: 1, child: Container()),

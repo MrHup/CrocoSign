@@ -7,24 +7,24 @@ Future<List<String>> generatePdfContent(InputAgreement agreement) async {
   String prompt = "You are a lawyer. ${agreement.generatePrompt()}";
   print(prompt);
 
-  final response = await http.post(
-    Uri.parse("${Config.baseApiUrl}/completions"),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${Env.openAiKey}',
-    },
-    body: jsonEncode(<String, dynamic>{
-      "prompt": prompt,
-      "model": Config.completionModel,
-      "max_tokens": 1500,
-      "temperature": 1.2,
-      "presence_penalty": 0.65,
-      "frequency_penalty": 0.35,
-    }),
-  );
+  // final response = await http.post(
+  //   Uri.parse("${Config.baseApiUrl}/completions"),
+  //   headers: <String, String>{
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${Env.openAiKey}',
+  //   },
+  //   body: jsonEncode(<String, dynamic>{
+  //     "prompt": prompt,
+  //     "model": Config.completionModel,
+  //     "max_tokens": 1500,
+  //     "temperature": 1.2,
+  //     "presence_penalty": 0.65,
+  //     "frequency_penalty": 0.35,
+  //   }),
+  // );
 
-  print(response.body);
-  print(response.statusCode);
+  // print(response.body);
+  // print(response.statusCode);
 
   return [];
 }

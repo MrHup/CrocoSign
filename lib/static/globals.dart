@@ -17,4 +17,5 @@ class Globals {
   );
 
   static ExportDelegate exportDelegate = ExportDelegate(options: options);
+  static BuildContext? context;
 }

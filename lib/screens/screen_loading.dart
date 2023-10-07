@@ -1,4 +1,4 @@
-import 'package:crocosign/static/globals.dart';
+import 'package:crocosign/widgets/changing_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -10,9 +10,16 @@ class LoadingScreen extends StatelessWidget {
     // add a container in the center of the screen
 
     return Scaffold(
-        backgroundColor: Globals.backgroundColor,
+        backgroundColor: Colors.white,
         body: Center(
-          child: Lottie.asset('assets/lottie.json'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Lottie.asset('assets/lottie.json'),
+              ChangingTextWidget()
+            ],
+          ),
         ));
   }
 }

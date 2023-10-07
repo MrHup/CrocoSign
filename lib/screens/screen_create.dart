@@ -2,6 +2,7 @@ import 'package:crocosign/static/generate_document.dart';
 import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/static/input_agreement.dart';
 import 'package:crocosign/widgets/bottom_nav_bar.dart';
+import 'package:crocosign/widgets/country_picker.dart';
 import 'package:crocosign/widgets/logo_banner.dart';
 import 'package:crocosign/widgets/long_input_field.dart';
 import 'package:crocosign/widgets/short_input_field.dart';
@@ -29,15 +30,16 @@ class CreateScreen extends StatelessWidget {
                 Expanded(
                   flex: 8,
                   child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
                     children: [
-                      ShortInputField(titleController),
+                      ShortInputField(titleController, hint: "Title"),
                       const SizedBox(height: 20),
                       LongInputField(descriptionController,
-                          title: "Short Description"),
+                          hint: "Short Description"),
+                      CountryPickerWidget(countryController),
                       const SizedBox(height: 20),
-                      ShortInputField(signersController, title: "Signers"),
-                      ShortInputField(countryController, title: "Country"),
-                      // generate button
+                      ShortInputField(signersController, hint: "Signers"),
+                      const SizedBox(height: 20),
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () async {
@@ -50,14 +52,20 @@ class CreateScreen extends StatelessWidget {
                               topic: descriptionController.text,
                               signers: signers,
                               country: countryController.text);
+
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/loading', (route) => false);
                           await generatePdfContent(inputAgreement);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Globals.primaryColor,
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
+                              horizontal: 20, vertical: 10),
                           textStyle: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                         child: const Text("Generate"),
                       ),

@@ -19,7 +19,7 @@ class LogoBanner extends StatelessWidget {
             child: Text(title,
                 style: TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     color: Globals.secondaryColor)),
           ),
           const Padding(
