@@ -3,7 +3,7 @@ import 'package:crocosign/static/input_agreement.dart';
 import 'package:crocosign/static/config.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<String>> generatePdfContent(InputAgreement agreement) async {
+Future<String> generatePdfContent(InputAgreement agreement) async {
   String prompt = "You are a lawyer. ${agreement.generatePrompt()}";
   print(prompt);
 
@@ -26,7 +26,7 @@ Future<List<String>> generatePdfContent(InputAgreement agreement) async {
   // print(response.body);
   // print(response.statusCode);
 
-  return [];
+  return "";
 }
 
 

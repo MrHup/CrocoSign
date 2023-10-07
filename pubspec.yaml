@@ -23,7 +23,8 @@ dependencies:
   fluttertoast: ^8.2.2
 
   country_picker: ^2.0.21
-  
+  firebase_database: ^10.2.7
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,5 @@
+import 'package:crocosign/static/agreement.dart';
+import 'package:crocosign/static/firebase_db.dart';
 import 'package:crocosign/static/generate_document.dart';
 import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/static/input_agreement.dart';
@@ -7,6 +9,7 @@ import 'package:crocosign/widgets/logo_banner.dart';
 import 'package:crocosign/widgets/long_input_field.dart';
 import 'package:crocosign/widgets/short_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreateScreen extends StatelessWidget {
   const CreateScreen({super.key});
@@ -55,7 +58,23 @@ class CreateScreen extends StatelessWidget {
 
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/loading', (route) => false);
-                          await generatePdfContent(inputAgreement);
+                          String contract =
+                              await generatePdfContent(inputAgreement);
+                          String formattedDate =
+                              DateFormat('MM/dd/yyyy').format(DateTime.now());
+
+                          Agreement agreement = Agreement(
+                            title: inputAgreement.title,
+                            topic: contract,
+                            signers: inputAgreement.signers,
+                            country: inputAgreement.country,
+                            idDropbox: "some_id",
+                            status: "pending",
+                            url: "some_url",
+                            date: formattedDate,
+                          );
+
+                          await createAgreement(agreement);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Globals.primaryColor,
