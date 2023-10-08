@@ -1,5 +1,4 @@
 import 'package:crocosign/static/agreement.dart';
-import 'package:crocosign/static/firebase_db.dart';
 import 'package:crocosign/static/generate_document.dart';
 import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/static/input_agreement.dart';
@@ -15,6 +14,7 @@ class CreateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Globals.context = context;
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
     TextEditingController signersController = TextEditingController();
@@ -64,13 +64,18 @@ class CreateScreen extends StatelessWidget {
                           topic: contract,
                           signers: inputAgreement.signers,
                           country: inputAgreement.country,
-                          idDropbox: "some_id",
+                          idDropbox: "pending",
                           status: "pending",
-                          url: "some_url",
+                          url: "pending",
                           date: formattedDate,
                         );
 
-                        await createAgreement(agreement);
+                        Globals.agreement = agreement;
+                        // await createAgreement(agreement);
+
+                        Globals.widgets = documentFormatter(contract);
+                        Navigator.pushNamedAndRemoveUntil(
+                            Globals.context!, '/editable', (route) => false);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Globals.primaryColor,

@@ -1,3 +1,4 @@
+import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/widgets/changing_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -7,8 +8,7 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // add a container in the center of the screen
-
+    Globals.context = context;
     return Scaffold(
         backgroundColor: Colors.white,
         body: Center(

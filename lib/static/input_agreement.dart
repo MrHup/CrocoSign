@@ -27,7 +27,6 @@ class InputAgreement {
   }
 
   String getCurrentDate() {
-    // get the current date
     DateTime now = DateTime.now();
     String formattedDate = "${now.day}/${now.month}/${now.year}";
     return formattedDate;
@@ -45,7 +44,7 @@ class InputAgreement {
     }
     prompt += "Date of signature: $currentDate\n";
     prompt +=
-        "The contract should be written following the rules of <country> in a formal descriptive manner. At the end, it should include space for the signees to sign. \n";
+        "The contract should be written following the rules of $country in a formal descriptive manner. At the end, it should include space for the signees to sign. \n";
     prompt +=
         "Add more information if necessary. Make it long and exclude any information we do not have.\n";
 

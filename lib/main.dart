@@ -1,12 +1,10 @@
-import 'package:crocosign/screens/screen_agreements.dart';
-import 'package:crocosign/screens/screen_create.dart';
 import 'package:crocosign/screens/screen_editable.dart';
 import 'package:crocosign/screens/screen_home.dart';
 import 'package:crocosign/screens/screen_loading.dart';
 import 'package:crocosign/screens/screen_login.dart';
 import 'package:crocosign/screens/screen_pdf_preview.dart';
-import 'package:crocosign/screens/screen_profile.dart';
 import 'package:crocosign/screens/screen_register.dart';
+import 'package:crocosign/static/agreement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,8 +38,15 @@ class MainRouter extends StatelessWidget {
         '/register': (BuildContext context) => RegisterScreen(),
         '/loading': (BuildContext context) => const LoadingScreen(),
         '/preview': (BuildContext context) => PdfPreviewScreen(),
-        '/editable': (BuildContext context) =>
-            EditableScreen("TEST", "TEST", "TEST", "TEST"),
+        '/editable': (BuildContext context) => EditableScreen(Agreement(
+            title: "Test",
+            country: "Test",
+            date: "",
+            signers: ["Flavius"],
+            idDropbox: "",
+            status: "waiting",
+            topic: "",
+            url: "")),
         '/home': (BuildContext context) => const HomeScreen(),
       },
       home: LoginScreen(),

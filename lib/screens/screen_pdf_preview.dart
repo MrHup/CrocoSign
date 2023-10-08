@@ -12,15 +12,7 @@ class PdfPreviewScreen extends StatelessWidget {
   final doc = pw.Document();
 
   Future<Uint8List> _generateFancyPdf() async {
-    final ExportOptions overrideOptions = ExportOptions(
-      pageFormatOptions: const PageFormatOptions.a4(),
-      textFieldOptions: TextFieldOptions.uniform(
-        interactive: false,
-      ),
-      checkboxOptions: CheckboxOptions.uniform(
-        interactive: false,
-      ),
-    );
+    final ExportOptions overrideOptions = Globals.options;
 
     final pdf = await Globals.exportDelegate
         .exportToPdfDocument('someFrameId', overrideOptions: overrideOptions);
