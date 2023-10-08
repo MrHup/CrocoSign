@@ -1,3 +1,4 @@
+import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 
 class ShortInputField extends StatelessWidget {
@@ -8,29 +9,18 @@ class ShortInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 15,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.all(16.0),
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.grey),
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Globals.backgroundColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: BorderSide.none,
         ),
+        contentPadding: const EdgeInsets.all(16.0),
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
       ),
     );
   }

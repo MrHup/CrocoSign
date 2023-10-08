@@ -78,7 +78,7 @@ class CreateScreen extends StatelessWidget {
                             Globals.context!, '/editable', (route) => false);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Globals.primaryColor,
+                        backgroundColor: Globals.secondaryColor,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 14),
                         textStyle: const TextStyle(

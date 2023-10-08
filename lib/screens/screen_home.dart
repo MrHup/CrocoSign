@@ -1,6 +1,7 @@
 import 'package:crocosign/screens/screen_agreements.dart';
 import 'package:crocosign/screens/screen_create.dart';
 import 'package:crocosign/screens/screen_profile.dart';
+import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedIndex = 0;
                   });
                 },
-                backgroundColor: Colors.green,
+                backgroundColor: Globals.primaryColor,
                 child: const Icon(Icons.add),
               )
             : null,

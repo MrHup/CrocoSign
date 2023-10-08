@@ -1,4 +1,5 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -50,15 +51,8 @@ class _CountryPickerWidgetState extends State<CountryPickerWidget> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Globals.backgroundColor,
           borderRadius: BorderRadius.circular(15.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              blurRadius: 15,
-              offset: const Offset(0, 3),
-            ),
-          ],
         ),
         child: Row(
           children: [

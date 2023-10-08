@@ -12,7 +12,7 @@ class LogoBanner extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
@@ -26,7 +26,7 @@ class LogoBanner extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Image(
               image: AssetImage('assets/logo.png'),
-              height: 100,
+              height: 80,
             ),
           ),
         ],

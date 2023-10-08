@@ -16,7 +16,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return SnakeNavigationBar.color(
       behaviour: SnakeBarBehaviour.floating,
-      snakeShape: SnakeShape.circle,
+      snakeShape: SnakeShape.rectangle,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -38,8 +38,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       },
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.picture_as_pdf), label: 'New Doc'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'PDF'),
+            icon: Icon(Icons.picture_as_pdf), label: 'Generate'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Profile'),
         // BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search')
       ],
