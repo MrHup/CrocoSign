@@ -38,15 +38,15 @@ class InputAgreement {
     String prompt =
         "This is an agreement contract between $signees following the regulations of $country. The signees request the following:\n";
     prompt += "The contract is titled $title and is about \"$topic\".\n";
-    prompt += "The signees are: $signees\n";
+    prompt += "The signers are: $signees\n";
     if (company != "") {
       prompt += "The company in cause is: $company\n";
     }
     prompt += "Date of signature: $currentDate\n";
     prompt +=
-        "The contract should be written following the rules of $country in a formal descriptive manner. At the end, it should include space for the signees to sign. \n";
+        "The contract should be written following the rules of $country in a formal descriptive manner. At the end, it should NOT include signature spaces. \n";
     prompt +=
-        "Add more information if necessary. Make it long and exclude any information we do not have.\n";
+        "Add more information if necessary. Make it long and exclude any information we do not have. Write section names in all caps.\n";
 
     return prompt;
   }

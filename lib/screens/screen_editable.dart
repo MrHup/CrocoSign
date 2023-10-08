@@ -31,7 +31,7 @@ class _EditableScreenState extends State<EditableScreen> {
   );
 
   TextStyle style = const TextStyle(
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: FontWeight.bold,
   );
 

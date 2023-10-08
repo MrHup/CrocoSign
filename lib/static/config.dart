@@ -8,4 +8,6 @@ class Config {
 
 class Env {
   static final openAiKey = dotenv.env['OPENAI_API_KEY'];
+  static final dropboxToken = dotenv.env['DROPBOX_TOKEN'];
+  static final dropboxBaseUrl = dotenv.env['DROPBOX_BASE_URL'];
 }

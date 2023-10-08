@@ -2,23 +2,18 @@ import 'dart:typed_data';
 
 import 'package:crocosign/static/generate_document.dart';
 import 'package:crocosign/static/globals.dart';
+import 'package:crocosign/static/initiate_routine.dart';
 import 'package:crocosign/widgets/pencil_progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_to_pdf/flutter_to_pdf.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+// ignore: must_be_immutable
 class PdfPreviewScreen extends StatelessWidget {
   PdfPreviewScreen({super.key});
 
-  Future<Uint8List> _generateFancyPdf() async {
-    final ExportOptions overrideOptions = Globals.options;
-    final pdf = await Globals.exportDelegate
-        .exportToPdfDocument('someFrameId', overrideOptions: overrideOptions);
-
-    return pdf.save();
-  }
+  Uint8List _pdfBytes = Uint8List(0);
 
   Future<Uint8List> generatePDFDoc() async {
     List<pw.Widget> widgets = [];
@@ -57,7 +52,9 @@ class PdfPreviewScreen extends StatelessWidget {
       ),
     );
 
-    return pdf.save();
+    _pdfBytes = await pdf.save();
+
+    return _pdfBytes;
   }
 
   @override
@@ -65,23 +62,54 @@ class PdfPreviewScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       // drawerScrimColor: Colors.black,
-      body: PdfPreview(
-        pdfPreviewPageDecoration: const BoxDecoration(
-          color: Colors.white,
+      body: Stack(children: [
+        PdfPreview(
+          pdfPreviewPageDecoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          scrollViewDecoration: BoxDecoration(
+            color: Globals.backgroundColor,
+          ),
+          previewPageMargin:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          allowPrinting: true,
+          canDebug: false,
+          canChangeOrientation: false,
+          canChangePageFormat: false,
+          maxPageWidth: 700,
+          loadingWidget: const Center(child: PencilProgressIndicator()),
+          build: (format) => generatePDFDoc(),
         ),
-        scrollViewDecoration: BoxDecoration(
-          color: Globals.backgroundColor,
+        Positioned(
+          bottom: 50,
+          right: 20,
+          child: Column(
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                backgroundColor: Colors.grey,
+                child: const Icon(Icons.close),
+              ),
+              const SizedBox(height: 10),
+              FloatingActionButton(
+                onPressed: () async {
+                  final String fileUrl =
+                      await uploadPdfToFirebaseStorage(_pdfBytes);
+                  Globals.agreement!.url = fileUrl;
+                  Globals.agreement =
+                      await requestDropboxSignatures(Globals.agreement!);
+
+                  // create record in storage
+                },
+                backgroundColor: Globals.secondaryColor,
+                child: const Icon(Icons.check),
+              ),
+            ],
+          ),
         ),
-        previewPageMargin:
-            const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-        allowPrinting: true,
-        canDebug: false,
-        canChangeOrientation: false,
-        canChangePageFormat: false,
-        maxPageWidth: 700,
-        loadingWidget: const Center(child: PencilProgressIndicator()),
-        build: (format) => generatePDFDoc(),
-      ),
+      ]),
     );
   }
 }

@@ -74,8 +74,7 @@ class CreateScreen extends StatelessWidget {
                         // await createAgreement(agreement);
 
                         Globals.widgets = documentFormatter(contract);
-                        Navigator.pushNamedAndRemoveUntil(
-                            Globals.context!, '/editable', (route) => false);
+                        Navigator.pushNamed(Globals.context!, '/editable');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Globals.secondaryColor,
