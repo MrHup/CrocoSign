@@ -5,6 +5,7 @@ import 'package:crocosign/screens/screen_login.dart';
 import 'package:crocosign/screens/screen_pdf_preview.dart';
 import 'package:crocosign/screens/screen_register.dart';
 import 'package:crocosign/static/agreement.dart';
+import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +31,21 @@ class MainRouter extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CrocoSign',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: MaterialColor(
+          Globals.primaryColor.value,
+          <int, Color>{
+            50: Globals.primaryColor.withOpacity(0.1),
+            100: Globals.primaryColor.withOpacity(0.2),
+            200: Globals.primaryColor.withOpacity(0.3),
+            300: Globals.primaryColor.withOpacity(0.4),
+            400: Globals.primaryColor.withOpacity(0.5),
+            500: Globals.primaryColor.withOpacity(0.6),
+            600: Globals.primaryColor.withOpacity(0.7),
+            700: Globals.primaryColor.withOpacity(0.8),
+            800: Globals.primaryColor.withOpacity(0.9),
+            900: Globals.primaryColor.withOpacity(1),
+          },
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: <String, WidgetBuilder>{
