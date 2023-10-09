@@ -1,4 +1,5 @@
 import 'package:crocosign/static/agreement.dart';
+import 'package:crocosign/static/download_agreement.dart';
 import 'package:crocosign/static/firebase_db.dart';
 import 'package:crocosign/widgets/card_agreement.dart';
 import 'package:crocosign/widgets/logo_banner.dart';
@@ -27,12 +28,17 @@ class _AgreementScreenState extends State<AgreementScreen> {
               if (snapshot.hasData) {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    // Add your refresh logic here
-                    setState(() {
-                      // wait 10 seconds
-                      Future.delayed(const Duration(seconds: 10), () {});
-                      print("It works");
-                    });
+                    print("Hard refresh");
+                    List<Agreement> agreements = snapshot.data!;
+                    for (var agreement in agreements) {
+                      final status = await getNewStatus(agreement.idDropbox);
+                      if (status != agreement.status) {
+                        agreement.status = status;
+                        setState(() {
+                          updateAgreementForUser(agreement);
+                        });
+                      }
+                    }
                   },
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,

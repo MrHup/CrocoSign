@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -33,5 +34,39 @@ Future<void> downloadAgreement(String id) async {
     print(file.path);
   } else {
     print(response.reasonPhrase);
+  }
+}
+
+Future<String> getNewStatus(String id) async {
+  var headers = {'Authorization': 'Basic ${Env.dropboxToken}'};
+  var request = http.Request(
+      'GET', Uri.parse('${Env.dropboxBaseUrl}/signature_request/$id'));
+
+  request.headers.addAll(headers);
+
+  var response = await request.send();
+
+  if (response.statusCode == 200) {
+    final String responseStr = await response.stream.bytesToString();
+    final bool hasError =
+        jsonDecode(responseStr)["signature_request"]["has_error"];
+    final bool isComplete =
+        jsonDecode(responseStr)["signature_request"]["is_complete"];
+    final bool isDeclined =
+        jsonDecode(responseStr)["signature_request"]["is_declined"];
+
+    if (hasError) {
+      return "error";
+    } else if (isDeclined) {
+      return "declined";
+    } else if (isComplete) {
+      return "completed";
+    } else {
+      return "pending";
+    }
+  } else {
+    print(response.statusCode);
+    print(response.reasonPhrase);
+    return "error";
   }
 }
