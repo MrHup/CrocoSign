@@ -24,11 +24,11 @@ Future<String> uploadPdfToFirebaseStorage(Uint8List data) async {
 
 Future<Agreement> requestDropboxSignatures(Agreement agreement) async {
   List<Object> dropSigners = [];
-  for (int i = 0; i < agreement.signers.length; i++) {
+  for (int i = 0; i < agreement.signers.length; i += 2) {
     dropSigners.add({
-      "email_address": "flavius.holerga+1@gmail.com",
+      "email_address": agreement.signers[i + 1],
       "name": agreement.signers[i],
-      "order": i
+      "order": i / 2
     });
   }
 
@@ -86,5 +86,3 @@ Future<Agreement> requestDropboxSignatures(Agreement agreement) async {
   }
   return agreement;
 }
-
-void storeAgreementInFirebaseDb() async {}

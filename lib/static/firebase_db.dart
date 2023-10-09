@@ -1,49 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:crocosign/static/agreement.dart';
-import 'package:crocosign/static/globals.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-
-// class FirebaseDb {
-//   static final FirebaseDb _instance = FirebaseDb._internal();
-//   final FirebaseDatabase _database = FirebaseDatabase.instance;
-
-//   factory FirebaseDb() {
-//     return _instance;
-//   }
-
-//   FirebaseDb._internal();
-
-//   Future<void> createAgreement(Agreement agreement) async {
-//     await _database.reference().child("agreements").push().set({
-//       "title": agreement.title,
-//       "topic": agreement.topic,
-//       "signers": agreement.signers,
-//       "country": agreement.country,
-//       "contract": agreement.contract,
-//       "pdf": agreement.pdf,
-//       "created_at": DateTime.now().millisecondsSinceEpoch,
-//     });
-//   }
-
-//   Future<List<Agreement>> fetchAgreements() async {
-//     List<Agreement> agreements = [];
-//     await _database
-//         .reference()
-//         .child("agreements")
-//         .orderByChild("created_at")
-//         .once()
-//         .then((DataSnapshot snapshot) {
-//       Object? values = snapshot.value;
-//       values?.forEach((key, values) {
-//         agreements.add(Agreement.fromJson(values));
-//       });
-//     });
-//     return agreements;
-//   }
-// }
 
 FirebaseDatabase database = FirebaseDatabase.instance;
 
@@ -54,7 +15,11 @@ String generateRandomString(int len) {
 }
 
 Future<void> createAgreement(Agreement agreement) async {
-  await database.ref("users").child(Globals.user!.uid).push().set({
+  Codec<String, String> stringToBase64 = utf8.fuse(base64);
+  final userMail = FirebaseAuth.instance.currentUser!.email;
+  final userMailb64 = stringToBase64.encode(userMail!);
+
+  await database.ref("users").child(userMailb64).push().set({
     "title": agreement.title,
     "topic": agreement.topic,
     "signers": agreement.signers,
@@ -69,9 +34,13 @@ Future<void> createAgreement(Agreement agreement) async {
 Future<List<Agreement>> getAgreementsForUser() async {
   List<Agreement> agreements = [];
   print("Getting agreements");
-  final userId = FirebaseAuth.instance.currentUser!.uid;
+
+  Codec<String, String> stringToBase64 = utf8.fuse(base64);
+  final userMail = FirebaseAuth.instance.currentUser!.email;
+  final userMailb64 = stringToBase64.encode(userMail!);
+
   final ref = FirebaseDatabase.instance.ref();
-  final snapshot = await ref.child('users/$userId').get();
+  final snapshot = await ref.child('users/$userMailb64').get();
   if (snapshot.exists) {
     for (var child in snapshot.children) {
       var agreementMap = child.value as Map<Object?, Object?>;

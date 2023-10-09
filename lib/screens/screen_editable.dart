@@ -55,14 +55,14 @@ class _EditableScreenState extends State<EditableScreen> {
       if (textwidget is Text) {
         controllers.add(TextEditingController(text: textwidget.data));
         editableList.add(Container(
-          color: Colors.white,
+          color: Globals.backgroundColor,
           child: TextField(
             minLines: 1,
             maxLines: 8,
             controller: controllers.last,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            // decoration: const InputDecoration(
+            //   border: OutlineInputBorder(),
+            // ),
             style: textwidget.style,
           ),
         ));
@@ -152,7 +152,7 @@ class _EditableScreenState extends State<EditableScreen> {
   Widget build(BuildContext context) {
     Globals.exportDelegate = ExportDelegate(options: Globals.options);
     return Scaffold(
-      backgroundColor: isEditable ? Globals.backgroundColor : Colors.white,
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

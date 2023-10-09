@@ -16,7 +16,7 @@ class InputAgreement {
     // transform the list of signees into a string
     // example: "signee1, signee2 ... and signeeN"
     String formattedSignees = "";
-    for (int i = 0; i < signees.length; i++) {
+    for (int i = 0; i < signees.length; i += 2) {
       if (i == signees.length - 1) {
         formattedSignees += "and ${signees[i]}";
       } else {
