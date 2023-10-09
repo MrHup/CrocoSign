@@ -20,7 +20,10 @@ class LongInputField extends StatelessWidget {
         fillColor: Globals.backgroundColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: Globals.primaryColor, // add green border
+            width: 2.0, // make the border thicker
+          ),
         ),
         contentPadding: const EdgeInsets.all(16.0),
         hintText: hint,

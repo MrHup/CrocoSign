@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:crocosign/static/agreement.dart';
 import 'package:crocosign/static/globals.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 // class FirebaseDb {
@@ -62,4 +64,31 @@ Future<void> createAgreement(Agreement agreement) async {
     "date": agreement.date,
     "status": agreement.status
   });
+}
+
+Future<List<Agreement>> getAgreementsForUser() async {
+  List<Agreement> agreements = [];
+  print("Getting agreements");
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+  final ref = FirebaseDatabase.instance.ref();
+  final snapshot = await ref.child('users/$userId').get();
+  if (snapshot.exists) {
+    for (var child in snapshot.children) {
+      var agreementMap = child.value as Map<Object?, Object?>;
+      var agreement = Agreement(
+        title: agreementMap['title'] as String,
+        topic: agreementMap['topic'] as String,
+        signers: List<String>.from(agreementMap['signers'] as List<dynamic>),
+        country: agreementMap['country'] as String,
+        url: agreementMap['url'] as String,
+        idDropbox: agreementMap['idDropbox'] as String,
+        date: agreementMap['date'] as String,
+        status: agreementMap['status'] as String,
+      );
+      agreements.add(agreement);
+    }
+  } else {
+    print('No data available.');
+  }
+  return agreements;
 }
