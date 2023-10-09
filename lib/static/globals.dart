@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:crocosign/static/agreement.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,4 +30,6 @@ class Globals {
   static String originalId = "first";
 
   static User? user;
+
+  static Uint8List downloadPdfBytes = Uint8List(0);
 }

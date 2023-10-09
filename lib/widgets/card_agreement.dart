@@ -1,4 +1,5 @@
 import 'package:crocosign/static/agreement.dart';
+import 'package:crocosign/static/download_agreement.dart';
 import 'package:crocosign/static/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -54,9 +55,17 @@ class CardAgreement extends StatelessWidget {
                               Text(agreement.title),
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.download,
-                                    color: Globals.secondaryColor,
+                                  GestureDetector(
+                                    onTap: () async {
+                                      print("Hi");
+                                      await downloadAgreement(
+                                          agreement.idDropbox);
+                                      Navigator.pushNamed(context, '/download');
+                                    },
+                                    child: Icon(
+                                      Icons.remove_red_eye,
+                                      color: Globals.secondaryColor,
+                                    ),
                                   ),
                                   // SizedBox(width: 5),
                                   // Icon(Icons.more_vert),

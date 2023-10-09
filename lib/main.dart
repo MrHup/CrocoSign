@@ -1,3 +1,4 @@
+import 'package:crocosign/screens/screen_download_preview.dart';
 import 'package:crocosign/screens/screen_editable.dart';
 import 'package:crocosign/screens/screen_home.dart';
 import 'package:crocosign/screens/screen_loading.dart';
@@ -63,6 +64,7 @@ class MainRouter extends StatelessWidget {
             topic: "",
             url: "")),
         '/home': (BuildContext context) => const HomeScreen(),
+        '/download': (BuildContext context) => DownloadPreviewScreen(),
       },
       home: LoginScreen(),
     );

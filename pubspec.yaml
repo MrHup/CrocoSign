@@ -24,6 +24,7 @@ dependencies:
   firebase_database: ^10.2.7
   fluttertoast: ^8.2.2
   dio: ^5.3.3
+  path_provider: ^2.1.1
 
   country_picker: ^2.0.21
   intl: ^0.18.1

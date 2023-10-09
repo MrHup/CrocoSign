@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 
 import 'package:crocosign/static/agreement.dart';
 import 'package:crocosign/static/config.dart';
 import 'package:crocosign/static/firebase_db.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-final dio = Dio();
 
 Future<String> uploadPdfToFirebaseStorage(Uint8List data) async {
   final storageRef = FirebaseStorage.instance.ref();
