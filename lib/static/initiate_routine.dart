@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import 'package:crocosign/static/agreement.dart';
 import 'package:crocosign/static/config.dart';
 import 'package:crocosign/static/firebase_db.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+final dio = Dio();
 
 Future<String> uploadPdfToFirebaseStorage(Uint8List data) async {
   final storageRef = FirebaseStorage.instance.ref();
@@ -31,41 +34,15 @@ Future<Agreement> requestDropboxSignatures(Agreement agreement) async {
       "order": i
     });
   }
-  String basicAuth =
-      'Basic ${base64Encode(utf8.encode('${Env.dropboxToken}:'))}';
 
-  print(basicAuth);
-  print(Env.dropboxToken);
-
-  final response = await http.post(
-    Uri.parse("${Env.dropboxBaseUrl}/signature_request/send"),
-    headers: <String, String>{
-      'authorization': basicAuth,
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode(<String, dynamic>{
-      'test_mode': true,
-      "title": agreement.title,
-      "subject": "CrocoSign - ${agreement.title}",
-      "message":
-          "Your signature is requested on this document about ${agreement.title}.",
-      "signers": dropSigners,
-      "cc_email_addresses": [],
-      "file_urls": [agreement.url],
-      "signing_options": {
-        "draw": true,
-        "type": true,
-        "upload": true,
-        "phone": false,
-        "default_type": "draw"
-      },
-      "metadata": {"custom_id": "1234", "custom_text": "Agreement"}
-    }),
-  );
-
-  print(Uri.parse("${Env.dropboxBaseUrl}/signature_request/send"));
-  print(jsonEncode(<String, dynamic>{
-    'test_mode': true,
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic ${Env.dropboxToken}',
+  };
+  var request = http.Request(
+      'POST', Uri.parse('${Env.dropboxBaseUrl}/signature_request/send'));
+  request.body = json.encode({
+    "test_mode": true,
     "title": agreement.title,
     "subject": "CrocoSign - ${agreement.title}",
     "message":
@@ -80,29 +57,36 @@ Future<Agreement> requestDropboxSignatures(Agreement agreement) async {
       "phone": false,
       "default_type": "draw"
     },
-    "metadata": {"custom_id": "1234", "custom_text": "Agreement"}
-  }));
+  });
+  request.headers.addAll(headers);
+  http.StreamedResponse response = await request.send();
 
-  print(response.body);
-  // final String itemId =
-  //     jsonDecode(response.body)["signature_request"]["signature_request_id"];
-  // final bool hasError =
-  //     jsonDecode(response.body)["signature_request"]["has_error"];
-  // final bool isComplete =
-  //     jsonDecode(response.body)["signature_request"]["is_complete"];
-  // final bool isDeclined =
-  //     jsonDecode(response.body)["signature_request"]["is_declined"];
+  try {
+    print(response.statusCode);
+    final String responseStr = await response.stream.bytesToString();
+    final String itemId =
+        jsonDecode(responseStr)["signature_request"]["signature_request_id"];
+    final bool hasError =
+        jsonDecode(responseStr)["signature_request"]["has_error"];
+    final bool isComplete =
+        jsonDecode(responseStr)["signature_request"]["is_complete"];
+    final bool isDeclined =
+        jsonDecode(responseStr)["signature_request"]["is_declined"];
 
-  // if (hasError || isDeclined) {
-  //   agreement.status = "error";
-  // } else if (isComplete) {
-  //   agreement.status = "completed";
-  // } else {
-  //   agreement.status = "pending";
-  // }
+    if (hasError || isDeclined) {
+      agreement.status = "error";
+    } else if (isComplete) {
+      agreement.status = "completed";
+    } else {
+      agreement.status = "pending";
+    }
 
-  // agreement.idDropbox = itemId;
+    agreement.idDropbox = itemId;
 
+    return agreement;
+  } catch (e) {
+    print(e);
+  }
   return agreement;
 }
 

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:crocosign/static/firebase_db.dart';
 import 'package:crocosign/static/generate_document.dart';
 import 'package:crocosign/static/globals.dart';
 import 'package:crocosign/static/initiate_routine.dart';
@@ -59,6 +60,7 @@ class PdfPreviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Globals.context = context;
     return Scaffold(
       backgroundColor: Colors.white,
       // drawerScrimColor: Colors.black,
@@ -100,8 +102,11 @@ class PdfPreviewScreen extends StatelessWidget {
                   Globals.agreement!.url = fileUrl;
                   Globals.agreement =
                       await requestDropboxSignatures(Globals.agreement!);
+                  await createAgreement(Globals.agreement!);
 
-                  // create record in storage
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamedAndRemoveUntil(
+                      Globals.context!, '/home', (route) => false);
                 },
                 backgroundColor: Globals.secondaryColor,
                 child: const Icon(Icons.check),
