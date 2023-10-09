@@ -70,3 +70,22 @@ Future<String> getNewStatus(String id) async {
     return "error";
   }
 }
+
+Future<int> getUserApiReqLeft() async {
+  var headers = {'Authorization': 'Basic ${Env.dropboxToken}'};
+  var request = http.Request('GET', Uri.parse('${Env.dropboxBaseUrl}/account'));
+
+  request.headers.addAll(headers);
+
+  var response = await request.send();
+  if (response.statusCode == 200) {
+    final String responseStr = await response.stream.bytesToString();
+    final int apiReqLeft = jsonDecode(responseStr)["account"]["quotas"]
+        ["api_signature_requests_left"];
+    return apiReqLeft;
+  } else {
+    print(response.statusCode);
+    print(response.reasonPhrase);
+    return 0;
+  }
+}
